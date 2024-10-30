@@ -175,10 +175,10 @@ sudo systemctl enable prysmd
 
 # Initialize the node
 printGreen "7. Initializing the node..."
-wardend config set client chain-id ${PRYSM_CHAIN_ID}
-wardend config set client keyring-backend test
-wardend config set client node tcp://localhost:${PRYSM_PORT}657
-wardend init ${MONIKER} --chain-id ${PRYSM_CHAIN_ID}
+prysmd config set client chain-id ${PRYSM_CHAIN_ID}
+prysmd config set client keyring-backend test
+prysmd config set client node tcp://localhost:${PRYSM_PORT}657
+prysmd init ${MONIKER} --chain-id ${PRYSM_CHAIN_ID}
 
 # Download genesis and addrbook files
 printGreen "8. Downloading genesis and addrbook..."
