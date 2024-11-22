@@ -188,10 +188,21 @@ wget -O $HOME/.prysm/config/addrbook.json "https://raw.githubusercontent.com/haz
 # Configure gas prices and ports
 printGreen "9. Configuring custom ports and gas prices..." && sleep 1
 sed -i -e "s/^minimum-gas-prices *=.*/minimum-gas-prices = \"0.00001uprysm\"/" $HOME/.prysm/config/app.toml
-sed -i.bak -e "s%:1317%:${PRYSM_PORT}317%g; s%:8080%:${PRYSM_PORT}080%g; s%:9090%:${PRYSM_PORT}090%g; s%:9091%:${PRYSM_PORT}091%g; s%:8545%:${PRYSM_PORT}545%g; s%:8546%:${PRYSM_PORT}546%g; s%:6065%:${PRYSM_PORT}065%g" $HOME/.prysm/config/app.toml
+sed -i.bak -e "s%:1317%:${PRYSM_PORT}317%g;
+s%:8080%:${PRYSM_PORT}080%g;
+s%:9090%:${PRYSM_PORT}090%g;
+s%:9091%:${PRYSM_PORT}091%g;
+s%:8545%:${PRYSM_PORT}545%g;
+s%:8546%:${PRYSM_PORT}546%g;
+s%:6065%:${PRYSM_PORT}065%g" $HOME/.prysm/config/app.toml
 
 # Configure P2P and ports
-sed -i.bak -e "s%:26658%:${PRYSM_PORT}658%g; s%:26657%:${PRYSM_PORT}657%g; s%:6060%:${PRYSM_PORT}060%g; s%:26656%:${PRYSM_PORT}656%g; s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${PRYSM_PORT}656\"%" $HOME/.prysm/config/config.toml
+sed -i.bak -e "s%:26658%:${PRYSM_PORT}658%g;
+s%:26657%:${PRYSM_PORT}657%g;
+s%:6060%:${PRYSM_PORT}060%g;
+s%:26656%:${PRYSM_PORT}656%g;
+s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${PRYSM_PORT}656\"%;
+s%:26660%:${PRYSM_PORT}660%g" $HOME/.prysm/config/config.toml
 
 # Set up seeds and peers
 printGreen "10. Setting up peers and seeds..." && sleep 1
