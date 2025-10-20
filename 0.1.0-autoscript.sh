@@ -151,19 +151,30 @@ cd prysm
 git checkout v0.1.0-devnet
 make install
 
+mkdir -p $HOME/.prysmd/cosmovisor/genesis/bin
+mv $HOME/go/bin/prysmd $HOME/.prysmd/cosmovisor/genesis/bin/
+
+sudo ln -s $HOME/.prysmd/cosmovisor/genesis $HOME/.prysmd/cosmovisor/current -f
+sudo ln -s $HOME/.prysmd/cosmovisor/current/bin/prysmd /usr/local/bin/prysmd -f
+
+
 # Create service file
-printGreen "6. Creating service file..." && sleep 1
-sudo tee /etc/systemd/system/prysmd.service > /dev/null <<EOF
+sudo bash -c "cat > /etc/systemd/system/prysmd.service" << EOF
 [Unit]
-Description=Prysm node
+Description=prysm node service
 After=network-online.target
+
 [Service]
 User=$USER
-WorkingDirectory=$HOME/.prysm
-ExecStart=$(which prysmd) start --home $HOME/.prysm
+ExecStart=$(which cosmovisor) run start
 Restart=on-failure
-RestartSec=5
+RestartSec=10
 LimitNOFILE=65535
+Environment="DAEMON_HOME=$HOME/.prysm"
+Environment="DAEMON_NAME=prysmd"
+Environment="UNSAFE_SKIP_BACKUP=true"
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:$HOME/.prysm/cosmovisor/current/bin"
+
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -215,9 +226,9 @@ sed -i.bak -e "s/^persistent_peers = \"\"/persistent_peers = \"$PEERS\"/" $HOME/
 
 # Pruning Settings
 printGreen "12. Setting up pruning config..." && sleep 1
-sed -i -e "s/^pruning *=.*/pruning = \"custom\"/" $HOME/.prysm/config/app.toml
+sed -i -e "s/^pruning *=.*/pruning = \"custom\"/" $HOME/.prysm/config/app.toml 
 sed -i -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" $HOME/.prysm/config/app.toml
-sed -i -e "s/^pruning-interval *=.*/pruning-interval = \"50\"/" $HOME/.prysm/config/app.toml
+sed -i -e "s/^pruning-interval *=.*/pruning-interval = \"19\"/" $HOME/.prysm/config/app.toml
 
 # Download the snapshot
 # printGreen "12. Downloading snapshot and starting node..." && sleep 1
