@@ -154,8 +154,9 @@ make install
 mkdir -p $HOME/.prysm/cosmovisor/genesis/bin
 mv $HOME/go/bin/prysm $HOME/.prysmd/cosmovisor/genesis/bin/
 
-sudo ln -s $HOME/.prysm/cosmovisor/genesis $HOME/.prysmd/cosmovisor/current -f
+sudo ln -s $HOME/.prysm/cosmovisor/genesis $HOME/.prysm/cosmovisor/current -f
 sudo ln -s $HOME/.prysm/cosmovisor/current/bin/prysmd /usr/local/bin/prysmd -f
+
 
 
 # Create service file
@@ -174,6 +175,7 @@ Environment="DAEMON_HOME=$HOME/.prysm"
 Environment="DAEMON_NAME=prysmd"
 Environment="UNSAFE_SKIP_BACKUP=true"
 Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:$HOME/.prysm/cosmovisor/current/bin"
+Environment="LD_LIBRARY_PATH=$HOME/.prysm/lib"
 
 [Install]
 WantedBy=multi-user.target
