@@ -151,11 +151,11 @@ cd prysm
 git checkout v0.1.0-devnet
 make install
 
-mkdir -p $HOME/.prysmd/cosmovisor/genesis/bin
-mv $HOME/go/bin/prysmd $HOME/.prysmd/cosmovisor/genesis/bin/
+mkdir -p $HOME/.prysm/cosmovisor/genesis/bin
+mv $HOME/go/bin/prysm $HOME/.prysmd/cosmovisor/genesis/bin/
 
-sudo ln -s $HOME/.prysmd/cosmovisor/genesis $HOME/.prysmd/cosmovisor/current -f
-sudo ln -s $HOME/.prysmd/cosmovisor/current/bin/prysmd /usr/local/bin/prysmd -f
+sudo ln -s $HOME/.prysm/cosmovisor/genesis $HOME/.prysmd/cosmovisor/current -f
+sudo ln -s $HOME/.prysm/cosmovisor/current/bin/prysmd /usr/local/bin/prysmd -f
 
 
 # Create service file
